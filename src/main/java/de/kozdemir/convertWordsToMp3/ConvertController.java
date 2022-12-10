@@ -13,9 +13,14 @@ import java.util.Locale;
 import org.apache.commons.io.IOUtils;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.Stage;
 
 public class ConvertController {
 
@@ -31,56 +36,91 @@ public class ConvertController {
 	private ComboBox<Locale> cmbTargetLanguage;
 
 	@FXML
-	public void clearForm() {
-		txtTextArea.clear();
-
-	}
+	private AnchorPane anchorPaneId;
 
 	@FXML
-	public void search() {
+	public void clearForm() {
+		txtTextArea.clear();
+	}
+
+	private static String directoryName;
+
+	@FXML
+	public void browse() {
+
+		final DirectoryChooser dc = new DirectoryChooser();
+
+		Stage stage = (Stage) anchorPaneId.getScene().getWindow();
+
+		File file = dc.showDialog(stage);
+
+		if (file != null) {
+
+			txtDirectoryName.setText(file.getAbsolutePath());
+			directoryName = file.getAbsolutePath().toString().replace("\\", "\\".concat("\\")).concat("\\")
+					.concat("\\");
+			System.out.println("Patch: " + directoryName);
+		}
 
 	}
 
 	@FXML
 	public void convert() {
 
-		klasorOlustur(new File("Audios"));
+//		klasorOlustur(new File("Audios"));
 
-		List<String> words = new ArrayList<>();
-		for (String s : txtTextArea.getText().split("\n")) {
-			words.add(s.trim().toLowerCase());
-		}
 
-		for (String w : words) {
-			 String dosyaadi = w.replace('?', ' ').replace(',', ' ').replace('.', ' ').replace('!', ' ');
-			 String translate = w.replace(' ', '+').replace("ü", "ue").replace("ä", "ae").replace("ß", "ss").replace("ö", "oe");
+		if (txtTextArea.getText().trim().equals("")) {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error");
+			alert.setHeaderText("Please paste the words you want to translate into the relevant field.");
+//				alert.setContentText(alert.toString());
+			alert.showAndWait();
 
-			if (dosyaadi.length() > 50) {
-				dosyaadi = dosyaadi.substring(0, 49)+"...";
+		} else if (directoryName != null) {
+			
+			List<String> words = new ArrayList<>();
+
+			for (String s : txtTextArea.getText().split("\n")) {
+				words.add(s.trim().toLowerCase());
 			}
+			for (String w : words) {
+				String dosyaadi = w.replace('?', ' ').replace(',', ' ').replace('.', ' ').replace('!', ' ');
+				String translate = w.replace(' ', '+').replace("ü", "ue").replace("ä", "ae").replace("ß", "ss")
+						.replace("ö", "oe");
 
+				if (dosyaadi.length() > 50) {
+					dosyaadi = dosyaadi.substring(0, 49) + "...";
+				}
 
-			URL url = null;
-			try {
-				url = new URL(
-						"https://translate.google.com/translate_tts?ie=UTF-8&tl=de-DE&client=tw-ob&q=" + translate);
+				URL url = null;
+				try {
+					url = new URL(
+							"https://translate.google.com/translate_tts?ie=UTF-8&tl=de-DE&client=tw-ob&q=" + translate);
 
-				System.out.println(url);
+					System.out.println(url);
 
-				HttpURLConnection httpcon = null;
+					HttpURLConnection httpcon = null;
 
-				httpcon = (HttpURLConnection) url.openConnection();
-				httpcon.addRequestProperty("User-Agent", "anything");
-				IOUtils.copy(httpcon.getInputStream(), new FileOutputStream("Audios\\" + dosyaadi + ".mp3"));
+					httpcon = (HttpURLConnection) url.openConnection();
+					httpcon.addRequestProperty("User-Agent", "anything");
+					IOUtils.copy(httpcon.getInputStream(), new FileOutputStream(directoryName + dosyaadi + ".mp3"));
 
-			} catch (MalformedURLException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			} catch (Exception e) {
-				e.printStackTrace();
+				} catch (MalformedURLException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+
 			}
-
+		} else {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error");
+			alert.setHeaderText("select the folder where you want to save the files");
+//			alert.setContentText(alert.toString());
+			alert.showAndWait();
 		}
 
 	}

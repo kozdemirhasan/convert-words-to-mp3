@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
@@ -7,36 +8,43 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.kozdemir.convertWordsToMp3.ConvertController">
+<AnchorPane fx:id="anchorPaneId" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.kozdemir.convertWordsToMp3.ConvertController">
    <children>
-      <Label layoutX="15.0" layoutY="318.0" prefHeight="17.0" prefWidth="60.0" text="Save as" AnchorPane.bottomAnchor="18.0" AnchorPane.leftAnchor="15.0">
+      <Label layoutX="15.0" layoutY="329.0" prefHeight="17.0" prefWidth="60.0" text="Save as" AnchorPane.bottomAnchor="54.0" AnchorPane.leftAnchor="15.0">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <TextField fx:id="txtDirectoryName" layoutX="75.0" layoutY="315.0" prefHeight="25.0" prefWidth="363.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="162.0" />
-      <Button layoutX="447.0" layoutY="315.0" mnemonicParsing="false" text="Search" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="100.0" />
-      <TextArea fx:id="txtTextArea" layoutX="14.0" layoutY="63.0" prefHeight="246.0" prefWidth="573.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="63.0" />
-      <ScrollBar layoutX="567.0" layoutY="55.0" orientation="VERTICAL" prefHeight="245.0" prefWidth="14.0" AnchorPane.bottomAnchor="50.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="55.0" />
-      <ComboBox layoutX="15.0" layoutY="14.0" prefWidth="150.0" AnchorPane.leftAnchor="20.0" />
-      <ComboBox layoutX="215.0" layoutY="14.0" prefWidth="150.0" />
-      <Label layoutX="186.0" layoutY="18.0" text="to">
+      <TextField fx:id="txtDirectoryName" editable="false" layoutX="75.0" layoutY="324.0" onMouseClicked="#browse" prefHeight="25.0" prefWidth="363.0" promptText="click here to select directory..." text="click here to select directory..." AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="20.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></TextField>
+      <TextArea fx:id="txtTextArea" layoutX="14.0" layoutY="63.0" prefHeight="255.0" prefWidth="573.0" AnchorPane.bottomAnchor="85.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="60.0" />
+      <ScrollBar layoutX="567.0" layoutY="55.0" orientation="VERTICAL" prefHeight="245.0" prefWidth="14.0" AnchorPane.bottomAnchor="85.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="60.0" />
+      <ComboBox layoutX="15.0" layoutY="14.0" prefWidth="150.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="15.0" />
+      <ComboBox layoutX="215.0" layoutY="14.0" prefWidth="150.0" AnchorPane.leftAnchor="215.0" AnchorPane.topAnchor="15.0" />
+      <Label layoutX="186.0" layoutY="18.0" text="to" AnchorPane.leftAnchor="185.0" AnchorPane.topAnchor="18.0">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <Label layoutX="386.0" layoutY="18.0" text=".mp3 ">
+      <Label layoutX="386.0" layoutY="18.0" text=".mp3 " AnchorPane.leftAnchor="386.0" AnchorPane.topAnchor="18.0">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <Button layoutX="517.0" layoutY="315.0" mnemonicParsing="false" onAction="#convert" prefHeight="25.0" prefWidth="70.0" text="Convert" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0">
-         <font>
-            <Font name="Arial Nova" size="12.0" />
-         </font>
-      </Button>
-      <Button layoutX="545.0" layoutY="14.0" mnemonicParsing="false" onAction="#clearForm" text="Clear" AnchorPane.rightAnchor="15.0" />
+      <Button layoutX="545.0" layoutY="14.0" mnemonicParsing="false" onAction="#clearForm" text="Clear" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="14.0" />
+      <VBox alignment="CENTER" prefHeight="30.0" prefWidth="100.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <Button mnemonicParsing="false" onAction="#convert" prefHeight="50.0" text="Convert" textFill="#9a1212">
+               <font>
+                  <Font name="Arial Nova Bold" size="14.0" />
+               </font>
+            </Button>
+         </children>
+      </VBox>
    </children>
 </AnchorPane>
